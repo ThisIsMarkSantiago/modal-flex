@@ -10,7 +10,7 @@ Flexible angular-bootstrap wrapper.
 
     var app = angular.module('yourModule', [
       ...
-      'ngFileUpload',
+      'modalFlex',
       ...
     ]);
 
@@ -18,7 +18,7 @@ Flexible angular-bootstrap wrapper.
 
     var app = angular.module('yourModule', [
       ...
-      'ngFileUpload',
+      'modalFlex',
       ...
     ]).controller('yourController', function($scope, $fmodal){
       ...
