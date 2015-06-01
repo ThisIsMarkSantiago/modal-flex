@@ -53,16 +53,22 @@ Usage
         - sample : ['name', 'address', 'age']
         - note : the keys will be displayed in the modal according to the order you declared in this option
 
-    options
+    options || radios
         - Array[{ key: 'keyName', options: arrayOfOptions}]
-        - used to define all keys of the object that needs to be a combobox instead of a textbox
+        - used to define all keys of the object that needs to be a combobox/radio-button instead of a textbox
         - sample:
             [   {key: 'civilStatus', options: ["Single", "Married", "Widowed"]},
                 {key: 'yearJoined', options: ['2000', '2001', '2002']},
                 {key: 'referrer', options: [{id:'10064', name:'Jose P. Rizal'}, {id:'10065', name:'Andres Bonifacio'}]
         - note: if the array of options is an object, it will display the name but the value will be the id
 
-    readOnly: ["id"],
+    numbers || textAreas
+        - Array[String]
+        - used to define all keys of the object that needs to be a number-box/textarea instead of a textbox
+        - sample: ["price","age"]
+        - sample: ["description","comment"]
+
+    readOnly
         - Array[String]
         - used to define all keys of the object that will be on read-only state
         - sample: ["id","password"]

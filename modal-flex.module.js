@@ -53,22 +53,34 @@ angular.module('modalFlex', [
   };
 
   $scope.getType = function(key){
-    if(data && data.options && data.options.filter(function(obj){ return obj.key == key }).length > 0) return "option";
+    if(data){
+      if(data.options && data.options.filter(function(obj){ return obj.key == key }).length > 0) return "option";
+      else if(data.radios && data.radios.filter(function(obj){ return obj.key == key }).length > 0) return "radio";
+      else if(data.numbers && data.numbers.indexOf(key) >= 0) return "number";
+      else if(data.textAreas && data.textAreas.indexOf(key) >= 0) return "text-area";
+    }
     return "text";
   };
 
+  $scope.specialType = function(type){
+    return ["text-area", "option", "radio"].indexOf(type) >= 0;
+  };
+
   $scope.getOptions = function(key){
-    if(data && data.options){
-      var option = data.options.filter(function(obj){ return obj.key == key })
-      if(option.length > 0){
-        return option[0].options;
+    if(data){
+      var options = data.options ? data.options : data.radios;
+      if(options){
+        var option = options.filter(function(obj){ return obj.key == key })
+        if(option.length > 0){
+          return option[0].options;
+        }
       }
     }
     return [];
   };
 
   for(var datum in $scope.data){
-    if($scope.getType(datum) == 'option'){
+    if(["option", "radio"].indexOf($scope.getType(datum)) >= 0){
       $scope.data[datum] = $scope.data[datum] ? ($scope.data[datum].id || $scope.data[datum]) : $scope.data[datum];
     }
   };

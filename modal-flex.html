@@ -8,8 +8,13 @@
         <div class="col-xs-4"><label ng-bind="key"></label></div>
         <div class="col-xs-8" ng-if="method!='edit'" ng-bind="parsed[key]"></div>
         <div class="col-xs-8" ng-if="method=='edit'">
-            <input type="text" class="form-control input-sm" ng-if="getType(key)=='text'" ng-model="data[key]" ng-readOnly="isReadOnly(key)"/>
-            <select  class="form-control input-sm" ng-if="getType(key)=='option'" ng-model="data[key]" ng-options="o.id||o as (o.name ? o.name : o) for o in getOptions(key)"></select>
+            <input type="{{getType(key)}}" class="form-control input-sm" ng-if="!specialType(getType(key))" ng-model="data[key]" ng-readOnly="isReadOnly(key)"/>
+            <select class="form-control input-sm" ng-if="getType(key)=='option'" ng-model="data[key]" ng-options="o.id||o as (o.name ? o.name : o) for o in getOptions(key)"></select>
+            <textarea class="form-control input-sm" ng-if="getType(key)=='text-area'" ng-model="data[key]"></textarea>
+            <label class="col-xs-12" ng-if="getType(key)=='radio'" ng-repeat="o in getOptions(key)">
+                <input type="radio" ng-model="data[key]" value="{{o.id ? o.id : o}}">
+                {{o.name ? o.name : o}}
+            </label>
         </div>
     </div>
 </div>
