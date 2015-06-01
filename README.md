@@ -2,7 +2,7 @@
 
 Flexible angular-bootstrap wrapper.
 
-** Install with bower **
+**Install with bower**
 
     bower install modal-flex
 
