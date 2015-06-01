@@ -2,7 +2,7 @@
 
 angular.module('modalFlex', [
   'ui.bootstrap'
-  ]).factory('fmodal', function ($modal) {
+  ]).factory('$fmodal', function ($modal) {
     var templateUrl = 'bower_components/modal-flex/modal-flex.html';
     return {
       open: function(data, success, cancel){
@@ -20,9 +20,9 @@ angular.module('modalFlex', [
     }
   })
 .controller('fmodal.controller', function($scope, $sce, $modalInstance, data) {
-  $scope.method = data.method ? data.method : "show";
+  $scope.method = !data.method || ['show', 'edit', 'delete'].indexOf(data.method.toLowerCase()) < 0 ? "show" : data.method.toLowerCase();
   $scope.type = data.type ? data.type : "object";
-  $scope.data = angular.copy(data.object); // Clone
+  $scope.data = data.object ? angular.copy(data.object) : {}; // Clone
 
   $scope.parseData = function(datum){
     var obj = {};
@@ -74,8 +74,8 @@ angular.module('modalFlex', [
   };
 
   $scope.ok = function () {
-    if(!data.onSuccess) return $modalInstance.close($scope.data);
-    data.onSuccess( $scope.data, function(data){
+    if(!data.onOk) return $modalInstance.close($scope.data);
+    data.onOk( $scope.data, function(data){
       $modalInstance.close(data ? data : $scope.data);
     }, function(errors){ 
       $scope.errors = $sce.trustAsHtml(errors);
