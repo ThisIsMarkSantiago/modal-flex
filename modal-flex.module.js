@@ -2,12 +2,13 @@
 
 angular.module('modalFlex', [
   'ui.bootstrap'
-  ]).factory('fmodal', function () {
+  ]).factory('fmodal', function ($modal) {
+    var templateUrl = 'bower_components/modal-flex/modal-flex.html';
     return {
       open: function(data, success, cancel){
-        $modal.open({
-          templateUrl: 'modal-flex.html',
-          controller: 'ModalHelperController',
+        var modalInstance = $modal.open({
+          templateUrl: templateUrl,
+          controller: 'fmodal.controller',
           resolve: {
               data: function(){
                   return data
