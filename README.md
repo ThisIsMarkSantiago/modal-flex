@@ -142,7 +142,7 @@ Sample
 
 
     $scope.showDetails = function (product) {
-        fmodal.open({
+        $fmodal.open({
             method: "show", // you can also not write this line
             object: product,
             show: [
@@ -155,6 +155,8 @@ Sample
         })
     };
 
+![alt tag](http://i288.photobucket.com/albums/ll178/santiagomarkbenedictesguerra/Screenshot%20from%202015-06-02%20150144_zpstl9vrobi.png)
+
 **Create Modal**
     
     var defaultProduct = {
@@ -165,7 +167,7 @@ Sample
         image: undefined
     }
     $scope.addProduct = function () {
-        fmodal.open({
+        $fmodal.open({
             method: "edit",
             object: defaultProduct,
             options: [
@@ -182,10 +184,12 @@ Sample
         });
     }
 
+![alt tag](http://i288.photobucket.com/albums/ll178/santiagomarkbenedictesguerra/Screenshot%20from%202015-06-02%20150819_zpspt1fsviw.png)
+
 **Edit Modal**
 
     $scope.editProduct = function (product) {
-        fmodal.open({
+        $fmodal.open({
             method: "edit",
             object: product,
             show: ["id", "name", "description", "category", "price", "image"],
@@ -208,10 +212,12 @@ Sample
         });
     });
 
+![alt tag](http://i288.photobucket.com/albums/ll178/santiagomarkbenedictesguerra/Screenshot%20from%202015-06-02%20151126_zpsuk2bepij.png)
+
 **Delete Modal**
 
     $scope.deleteProduct = function (product) {
-        fmodal.open({
+        $fmodal.open({
             method: "delete",
             type: "product",
             object: product,
@@ -231,3 +237,33 @@ Sample
             };
         });
     }
+
+![alt tag](http://i288.photobucket.com/albums/ll178/santiagomarkbenedictesguerra/Screenshot%20from%202015-06-02%20151331_zpsbrd05elr.png)
+
+**Custom Modal**
+
+    $scope.deliver = function(product){
+        $fmodal.open({
+            method: "edit",
+            titleText: 'Delivery Details',
+            message: '<p>Please confirm the delivery details below.</p>',
+            object: {
+                productId: product.id,
+                'Product Name': product.name,
+                'Store': product.store.name,
+                'Delivery Address': undefined
+            },
+            show: ["Product Name", "Store", "Delivery Address"],
+            readOnly: ["Product Name", "Store"],
+            textAreas: ['Delivery Address'],
+            okText: "Submit",
+            cancelText: "Abort",
+            onOk: function(deliveryDetails, close, error){
+                console.log(deliveryDetails)
+                // DO SOMETHING
+                close();
+            }
+        });
+    }
+
+![alt tag](http://i288.photobucket.com/albums/ll178/santiagomarkbenedictesguerra/Screenshot%20from%202015-06-02%20145239_zpsdnjiy5mz.png)
