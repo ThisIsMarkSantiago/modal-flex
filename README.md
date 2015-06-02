@@ -62,9 +62,9 @@ Usage
                 {key: 'referrer', options: [{id:'10064', name:'Jose P. Rizal'}, {id:'10065', name:'Andres Bonifacio'}]
         - note: if the array of options is an object, it will display the name but the value will be the id
 
-    numbers || textAreas
+    numbers || textAreas || emails || passwords || checkboxes
         - Array[String]
-        - used to define all keys of the object that needs to be a number-box/textarea instead of a textbox
+        - used to define all keys of the object that needs to be a number-box/textarea/email-box/password-box/checkbox instead of a textbox
         - sample: ["price","age"]
         - sample: ["description","comment"]
 
@@ -72,6 +72,11 @@ Usage
         - Array[String]
         - used to define all keys of the object that will be on read-only state
         - sample: ["id","password"]
+
+    required
+        - Array[String]
+        - used to define all keys of the object that is required
+        - sample: ["name","category"]
     
     onOk
         - function(object, close, error)
