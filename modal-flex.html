@@ -3,20 +3,58 @@
     <h3 class="modal-title" ng-if="method=='delete'">Are you sure you want to delete this {{type}}?</h3>
 </div>
 <div class="modal-body">
-    <div class="alert alert-danger" ng-bind-html="errors" ng-show="errors"></div>
-    <div class="row form-field" ng-repeat="key in keys(parsed = parseData(data))">
-        <div class="col-xs-4"><label ng-bind="key"></label></div>
-        <div class="col-xs-8" ng-if="method!='edit'" ng-bind="parsed[key]"></div>
-        <div class="col-xs-8" ng-if="method=='edit'">
-            <input type="{{getType(key)}}" class="form-control input-sm" ng-if="!specialType(getType(key))" ng-model="data[key]" ng-readOnly="isReadOnly(key)"/>
-            <select class="form-control input-sm" ng-if="getType(key)=='option'" ng-model="data[key]" ng-options="o.id||o as (o.name ? o.name : o) for o in getOptions(key)"></select>
-            <textarea class="form-control input-sm" ng-if="getType(key)=='text-area'" ng-model="data[key]"></textarea>
-            <label class="col-xs-12" ng-if="getType(key)=='radio'" ng-repeat="o in getOptions(key)">
-                <input type="radio" ng-model="data[key]" value="{{o.id ? o.id : o}}">
-                {{o.name ? o.name : o}}
-            </label>
+    <div class="alert alert-danger" ng-show="errors" ng-bind-html="errors"></div>
+    <form name="modalFlexForm">
+        <div class="row form-field" ng-repeat="key in keys(parsed = parseData(data))">
+            <div class="col-xs-4"><label ng-bind="key"></label></div>
+            <div class="col-xs-8" ng-if="method!='edit'" ng-bind="parsed[key]"></div>
+            <div class="col-xs-8" ng-if="method=='edit'" ng-class="{ 'has-error' : modalFlexForm[key].$invalid && (!modalFlexForm[key].$pristine || showFormErrors)}">
+                <!-- TEXT, NUMBER, EMAIL, PASSWORD -->
+                <input type="{{getType(key)}}"
+                    name="{{key}}"
+                    class="form-control input-sm"
+                    ng-if="!specialType(getType(key))"
+                    ng-model="data[key]"
+                    ng-readOnly="isReadOnly(key)"
+                    ng-required="isRequired(key)"/>
+                <!-- OPTION -->
+                <select ng-options="o.id||o as (o.name ? o.name : o) for o in getOptions(key)"
+                    name="{{key}}"
+                    class="form-control input-sm"
+                    ng-if="getType(key)=='option'"
+                    ng-model="data[key]"
+                    ng-readOnly="isReadOnly(key)"
+                    ng-required="isRequired(key)">
+                </select>
+                <!-- TEXTAREA -->
+                <textarea
+                    name="{{key}}"
+                    class="form-control input-sm"
+                    ng-if="getType(key)=='text-area'"
+                    ng-model="data[key]"
+                    ng-readOnly="isReadOnly(key)"
+                    ng-required="isRequired(key)">
+                </textarea>
+                <!-- RADIO -->
+                <label ng-repeat="o in getOptions(key)"
+                    class="col-xs-12"
+                    ng-if="getType(key)=='radio'">
+                    <input type="radio"
+                        name="{{key}}"
+                        ng-model="data[key]"
+                        value="{{o.id ? o.id : o}}"
+                        ng-disabled="{{isReadOnly(key) && (o.id ? o.id : o) != data[key]}}"
+                        ng-required="isRequired(key)">
+                    {{o.name ? o.name : o}}
+                </label>
+                <p ng-show="modalFlexForm[key].$invalid && (!modalFlexForm[key].$pristine || showFormErrors)" class="help-block">
+                    <span ng-show="modalFlexForm[key].$error.email">{{key}} should be an email!</span>
+                    <span ng-show="modalFlexForm[key].$error.required">{{key}} is required!</span>
+                    <span ng-hide="modalFlexForm[key].$error.email || modalFlexForm[key].$error.required">{{key}} is invalid!</span>
+                </p>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 <div class="modal-footer" ng-if="method!='show'">
     <button class="btn btn-primary btn-xs" ng-click="ok()">

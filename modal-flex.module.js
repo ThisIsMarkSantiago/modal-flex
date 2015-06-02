@@ -48,6 +48,11 @@ angular.module('modalFlex', [
     return true;
   };
 
+  $scope.isRequired = function(key){
+    if(!data || !data.required || data.required.indexOf(key) < 0) return false;
+    return true;
+  };
+
   $scope.keys = function(obj){
     return obj? Object.keys(obj) : [];
   };
@@ -57,6 +62,9 @@ angular.module('modalFlex', [
       if(data.options && data.options.filter(function(obj){ return obj.key == key }).length > 0) return "option";
       else if(data.radios && data.radios.filter(function(obj){ return obj.key == key }).length > 0) return "radio";
       else if(data.numbers && data.numbers.indexOf(key) >= 0) return "number";
+      else if(data.passwords && data.passwords.indexOf(key) >= 0) return "password";
+      else if(data.emails && data.emails.indexOf(key) >= 0) return "email";
+      else if(data.checkboxes && data.checkboxes.indexOf(key) >= 0) return "checkbox";
       else if(data.textAreas && data.textAreas.indexOf(key) >= 0) return "text-area";
     }
     return "text";
@@ -86,12 +94,17 @@ angular.module('modalFlex', [
   };
 
   $scope.ok = function () {
-    if(!data.onOk) return $modalInstance.close($scope.data);
-    data.onOk( $scope.data, function(data){
-      $modalInstance.close(data ? data : $scope.data);
-    }, function(errors){ 
-      $scope.errors = $sce.trustAsHtml(errors);
-    });
+    $scope.showFormErrors = false;
+    if($scope.modalFlexForm.$valid){
+      if(!data.onOk) return $modalInstance.close($scope.data);
+      data.onOk( $scope.data, function(data){
+        $modalInstance.close(data ? data : $scope.data);
+      }, function(errors){ 
+        $scope.errors = $sce.trustAsHtml(errors);
+      });
+    } else {
+      $scope.showFormErrors = true;
+    }
   };
 
   $scope.cancel = function () {
