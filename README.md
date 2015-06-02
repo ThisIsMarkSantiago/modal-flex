@@ -101,6 +101,32 @@ Usage
                 - to invoke: close() or close("canceled")
         - if not defined, the modal will close automatically when the Cancel button in clicked
 
+    okText
+        - String
+        - overrides the Save/Delete text on the modal button
+
+    cancelText
+        - String
+        - overrides the Cancel text on the modal button
+
+    titleText
+        - String
+        - sets the modal title text
+        - if method is 'delete', defaults to 'Are you sure you want to delete this object?'
+        - if method is 'edit', defaults to obect's name key, and blank if obect's name key is not defined
+
+    message
+        - HTML text
+        - displays a message in the modal
+
+    displayCancel
+        - Boolean
+        - option to display the cancel button
+
+    icons
+        - Boolean
+        - if set false, the button icons wont be displayed
+
 **close**
 
     - the callback function when the modal is closed
