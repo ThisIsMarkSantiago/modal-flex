@@ -31,6 +31,7 @@
                 <textarea
                     name="{{key}}"
                     class="form-control input-sm"
+                    style="resize: vertical"
                     ng-if="getType(key)=='text-area'"
                     ng-model="data[key]"
                     ng-readOnly="isReadOnly(key)"
