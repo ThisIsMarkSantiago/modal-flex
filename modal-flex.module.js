@@ -25,8 +25,8 @@ angular.module('modalFlex', [
   $scope.okText = data.okText ? data.okText : 'Save';
   $scope.cancelText = data.cancelText ? data.cancelText : 'Cancel';
   $scope.titleText = data.titleText;
-  $scope.displayCancel = data.displayCancel ? data.displayCancel : true;
-  $scope.icons = data.icons ? data.icons : true;
+  $scope.displayCancel = data.displayCancel != undefined ? data.displayCancel : true;
+  $scope.icons = data.icons != undefined ? data.icons : true;
   $scope.message = $sce.trustAsHtml(data.message);
   $scope.data = data.object ? angular.copy(data.object) : {}; // Clone
 
