@@ -22,7 +22,7 @@ angular.module('modalFlex', [
 .controller('fmodal.controller', function($scope, $sce, $modalInstance, data) {
   $scope.method = !data.method || ['show', 'edit', 'delete'].indexOf(data.method.toLowerCase()) < 0 ? "show" : data.method.toLowerCase();
   $scope.type = data.type ? data.type : "object";
-  $scope.okText = data.okText ? data.okText : 'Save';
+  $scope.okText = data.okText ? data.okText : $scope.method == "save" ? 'Save' : 'Delete';
   $scope.cancelText = data.cancelText ? data.cancelText : 'Cancel';
   $scope.titleText = data.titleText;
   $scope.displayCancel = data.displayCancel != undefined ? data.displayCancel : true;
