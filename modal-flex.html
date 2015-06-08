@@ -7,7 +7,7 @@
     <div class="alert alert-danger" ng-show="errors" ng-bind-html="errors"></div>
     <form name="modalFlexForm">
         <div class="row form-field" ng-repeat="key in keys(parsed = parseData(data))">
-            <div class="col-xs-4"><label ng-bind="key"></label></div>
+            <div class="col-xs-4"><label ng-bind="parseKey(key)"></label></div>
             <div class="col-xs-8" ng-if="method!='edit'" ng-bind="parsed[key]"></div>
             <div class="col-xs-8" ng-if="method=='edit'" ng-class="{ 'has-error' : modalFlexForm[key].$invalid && (!modalFlexForm[key].$pristine || showFormErrors)}">
                 <!-- TEXT, NUMBER, EMAIL, PASSWORD -->

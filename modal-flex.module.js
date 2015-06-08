@@ -93,6 +93,11 @@ angular.module('modalFlex', [
     return [];
   };
 
+  $scope.parseKey = function(key){
+    if(!data || data.capitalize == false) return key
+    return (key.charAt(0).toUpperCase() + key.substring(1)).replace(/([A-Z]+)*([A-Z][a-z])/g, "$1 $2");
+  }
+
   for(var datum in $scope.data){
     if(["option", "radio"].indexOf($scope.getType(datum)) >= 0){
       $scope.data[datum] = $scope.data[datum] ? ($scope.data[datum].id || $scope.data[datum]) : $scope.data[datum];

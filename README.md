@@ -53,6 +53,10 @@ Usage
         - sample : ['name', 'address', 'age']
         - note : the keys will be displayed in the modal according to the order you declared in this option
 
+    capitalize
+        - Boolean
+        - set to false to disable capitalizing keys
+
     options || radios
         - Array[{ key: 'keyName', options: arrayOfOptions}]
         - used to define all keys of the object that needs to be a combobox/radio-button instead of a textbox
