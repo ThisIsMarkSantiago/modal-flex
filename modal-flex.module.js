@@ -16,18 +16,22 @@ angular.module('modalFlex', [
           }
         });
         modalInstance.result.then(success,cancel);
+        return modalInstance
       }
     }
   })
-.controller('fmodal.controller', function($scope, $sce, $modalInstance, data) {
+.controller('fmodal.controller', function($scope, $sce, $modalInstance, data, $compile) {
   $scope.method = !data.method || ['show', 'edit', 'delete'].indexOf(data.method.toLowerCase()) < 0 ? "show" : data.method.toLowerCase();
+  for (var scope in data.resolve){
+    $scope[scope] = data.resolve[scope];
+  }
   $scope.type = data.type ? data.type : "object";
   $scope.okText = data.okText ? data.okText : $scope.method == "delete" ? 'Delete' : 'Save';
   $scope.cancelText = data.cancelText ? data.cancelText : 'Cancel';
   $scope.titleText = data.titleText;
   $scope.displayCancel = data.displayCancel != undefined ? data.displayCancel : true;
   $scope.icons = data.icons != undefined ? data.icons : true;
-  $scope.message = $sce.trustAsHtml(data.message);
+  $scope.message = data.message;
   $scope.data = data.object ? angular.copy(data.object) : {}; // Clone
 
   $scope.parseData = function(datum){
@@ -122,4 +126,47 @@ angular.module('modalFlex', [
     if(!data.onCancel) return $modalInstance.dismiss($scope.data);
     data.onCancel($scope.data, function(message){ $modalInstance.dismiss(message ? message : 'cancel'); });
   };
+
+  $scope.dismiss = function(){
+    $modalInstance.dismiss($scope.data)
+  }
+
+  $scope.close = function(){
+    $modalInstance.close($scope.data)
+  }
+}).directive('modalFlexMessage', function($compile) {
+  return {
+    restrict: 'E',
+    link: function(scope, element, attr){
+      console.log(attr.message)
+      element.append($compile(attr.message)(scope));
+    }
+  };
+}).directive('modalFlexOk', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, element, attr){
+      element.on('click', scope.ok)
+      if(scope.method == 'edit'){
+        element.append('<span>'+(scope.okText||'')+'</span>')
+        if(scope.icons){
+          if(scope.okText == 'Save') element.prepend('<span class="glyphicon glyphicon-save"></span>');
+          else element.prepend('<span class="glyphicon glyphicon-ok"></span>');
+        }
+      } else if(scope.method == 'delete'){
+        element.append('<span>'+(scope.okText||'')+'</span>')
+        if(scope.icons) element.prepend('<span class="glyphicon glyphicon-trash"></span>');
+      }
+    }
+  };
+}).directive('modalFlexCancel', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, element, attr){
+      element.on('click', scope.cancel)
+      element.append('<span>'+(scope.cancelText||'')+'</span>')
+      if(scope.icons) element.prepend('<span class="glyphicon glyphicon-remove"></span>');
+    }
+  };
 });
+    

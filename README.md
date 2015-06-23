@@ -122,6 +122,8 @@ Usage
     message
         - HTML text
         - displays a message in the modal
+        - can use scopes or methods in the modal such as close(), dismiss(), ok() and cancel
+        - in case custom scopes are needed, declare scopes in the resolve parameter (see resolve)
 
     displayCancel
         - Boolean
@@ -130,6 +132,18 @@ Usage
     icons
         - Boolean
         - if set false, the button icons wont be displayed
+
+    resolve
+        - object
+        - pass scopes that can be used in the message parameter
+
+        Sample:
+            resolve: {
+                clicked: function(){
+                    alert('click function called')
+                }
+            },
+            message: "<button ng-click='clicked()'>button</button"
 
 **close**
 

@@ -3,7 +3,7 @@
     <h3 class="modal-title" ng-if="method=='delete'" ng-bind="titleText ? titleText : 'Are you sure you want to delete this '+ type + '?'"></h3>
 </div>
 <div class="modal-body">
-    <div ng-bind-html="message"></div>
+    <modal-flex-message message="{{message}}"></modal-flex-message>
     <div class="alert alert-danger" ng-show="errors" ng-bind-html="errors"></div>
     <form name="modalFlexForm">
         <div class="row form-field" ng-repeat="key in keys(parsed = parseData(data))">
@@ -59,19 +59,6 @@
     </form>
 </div>
 <div class="modal-footer" ng-if="method!='show'">
-    <button class="btn btn-primary btn-xs" ng-click="ok()">
-        <span ng-if="method=='edit'">
-            <span class="glyphicon glyphicon-save" ng-if="okText=='Save' && icons"></span>
-            <span class="glyphicon glyphicon-ok" ng-if="okText!='Save' && icons"></span>
-            <span ng-bind="okText"></span>
-        </span>
-        <span ng-if="method=='delete'">
-            <span class="glyphicon glyphicon-trash" ng-if="icons"></span>
-            <span ng-bind="okText"></span>
-        </span>
-    </button>
-    <button class="btn btn-danger btn-xs" ng-if="displayCancel" ng-click="cancel()">
-        <span class="glyphicon glyphicon-remove" ng-if="icons"></span>
-        <span ng-bind="cancelText"></span>
-    </button>
+    <modal-flex-ok class="btn btn-primary btn-xs"></modal-flex-ok>
+    <modal-flex-cancel class="btn btn-danger btn-xs"></modal-flex-cancel>
 </div>
