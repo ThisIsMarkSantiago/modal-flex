@@ -138,7 +138,6 @@ angular.module('modalFlex', [
   return {
     restrict: 'E',
     link: function(scope, element, attr){
-      console.log(attr.message)
       element.append($compile(attr.message)(scope));
     }
   };
