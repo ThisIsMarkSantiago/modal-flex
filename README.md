@@ -72,6 +72,11 @@ Usage
         - sample: ["price","age"]
         - sample: ["description","comment"]
 
+    files
+        - Array[String]
+        - used to define all keys of the object that needs to be a input file instead of a textbox
+        - sample: ["price","age"]
+
     readOnly
         - Array[String]
         - used to define all keys of the object that will be on read-only state

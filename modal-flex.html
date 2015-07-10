@@ -49,6 +49,21 @@
                         ng-required="isRequired(key)">
                     {{o.name ? o.name : o}}
                 </label>
+                <!-- FILE -->
+                <div ng-if="getType(key) == 'file'">
+                    <div ng-show="preview[key]">
+                        <div style="background-image:url('{{preview[key]}}');display: block; width: 100px; height: 100px; background-size: contain; background-repeat: no-repeat; background-position: center;">
+                        </div>
+                        <hr/>
+                    </div>
+                    <input type="{{getType(key)}}" custom-file-input
+                        name="{{key}}"
+                        class="form-control input-sm"
+                        ng-model="data[key]"
+                        ng-disabled="isReadOnly(key)"
+                        ng-required="isRequired(key)"
+                    />
+                </div>
                 <p ng-show="modalFlexForm[key].$invalid && (!modalFlexForm[key].$pristine || showFormErrors)" class="help-block">
                     <span ng-show="modalFlexForm[key].$error.email">{{key}} should be an email!</span>
                     <span ng-show="modalFlexForm[key].$error.required">{{key}} is required!</span>
